@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Tabla Dinámica de Cantidades</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function agregarCantidades() {
+            const cantidades = [];
+            let total = 0;
+
+            // Solicitar hasta 10 cantidades
+            for (let i = 0; i < 10; i++) {
+                let cantidad = prompt(`Ingrese la cantidad ${i + 1} (o deje vacío para terminar):`);
+                if (cantidad === "") break; // Termina si el campo está vacío
+                cantidad = parseFloat(cantidad);
+                if (!isNaN(cantidad)) {
+                    cantidades.push(cantidad);
+                    total += cantidad;
+                }
+            }
+
+            // Solicitar 2 o 3 cantidades adicionales
+            for (let j = 0; j < 3; j++) {
+                let cantidadAdicional = prompt(`Ingrese una cantidad adicional ${j + 1} (o deje vacío para terminar):`);
+                if (cantidadAdicional === "") break; // Termina si el campo está vacío
+                cantidadAdicional = parseFloat(cantidadAdicional);
+                if (!isNaN(cantidadAdicional)) {
+                    cantidades.push(cantidadAdicional);
+                    total += cantidadAdicional;
+                }
+            }
+
+            // Mostrar la tabla con las cantidades ingresadas
+            mostrarTabla(cantidades, total);
+        }
+
+        function mostrarTabla(cantidades, total) {
+            const tabla = document.getElementById("tablaCantidades");
+            tabla.innerHTML = ""; // Limpiar tabla anterior
+
+            // Crear encabezados
+            const encabezado = tabla.createTHead();
+            const filaEncabezado = encabezado.insertRow();
+            const celdaEncabezado = document.createElement("th");
+            celdaEncabezado.innerText = "Cantidades Ingresadas";
+            filaEncabezado.appendChild(celdaEncabezado);
+
+            // Agregar filas con las cantidades
+            const cuerpoTabla = tabla.createTBody();
+            cantidades.forEach(cantidad => {
+                const fila = cuerpoTabla.insertRow();
+                const celda = fila.insertCell();
+                celda.innerText = cantidad;
+            });
+
+            // Mostrar total
+            const filaTotal = cuerpoTabla.insertRow();
+            const celdaTotal = filaTotal.insertCell();
+            celdaTotal.colSpan = 1;
+            celdaTotal.innerText = `Total: ${total}`;
+        }
+
+        window.onload = agregarCantidades; // Iniciar al cargar la página
+    </script>
+</head>
+<body>
+    <h1>Tabla Dinámica de Cantidades</h1>
+    <table id="tablaCantidades"></table>
+</body>
+</html>
